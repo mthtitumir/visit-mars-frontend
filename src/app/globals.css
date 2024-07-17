@@ -5,6 +5,7 @@
 body {
   /* cursor: none; */
   @apply tracking-wide;
+  color: #ffffff;
 }
 .c-auto {
   @apply container mx-auto;
