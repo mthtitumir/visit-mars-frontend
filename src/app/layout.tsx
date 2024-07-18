@@ -3,6 +3,7 @@ import { Inconsolata } from "next/font/google";
 import "./globals.css";
 import { TChildrenProps } from "@/types";
 import { Toaster } from "react-hot-toast";
+import Providers from "@/providers/Providers";
 
 const inter = Inconsolata({
   subsets: ["latin", "latin-ext"],
@@ -18,8 +19,10 @@ export default function RootLayout({ children }: TChildrenProps) {
   return (
     <html lang="en">
       <body className={`${inter.className} bg-[#0A192F]`}>
-        <Toaster />
-        {children}
+        <Providers>
+          <Toaster />
+          {children}
+        </Providers>
       </body>
     </html>
   );

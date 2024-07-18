@@ -2,7 +2,6 @@
 
 import { Stepper, Step, Button, Typography } from "@material-tailwind/react";
 import React from "react";
-import { IconsManifest } from "react-icons";
 import { FaIcons } from "react-icons/fa";
  
 export const ApplyForm = () => {
