@@ -1,9 +1,10 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { nextStep, updateApplyForm } from "@/redux/features/apply/applySlice";
+import { Input } from "@material-tailwind/react";
 
 const schema = z.object({
   fullName: z.string().nonempty("Full Name is required"),
@@ -27,7 +28,8 @@ const PersonalInformation = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
+    console.log({ data });
     dispatch(updateApplyForm(data));
     dispatch(nextStep());
   };
@@ -37,57 +39,67 @@ const PersonalInformation = () => {
       <h2 className="text-2xl font-bold mb-4">Personal Information</h2>
       <input
         type="text"
-        name="fullName"
+        // name="fullName"
         placeholder="Full Name"
         defaultValue={fullName}
         {...register("fullName")}
-        className="w-full mb-4 p-2 border"
+        className="w-full mb-4 p-2 focus:outline-none border-main bg-transparent rounded-md"
       />
       {errors.fullName && (
-        <p className="text-red-500">{errors.fullName.message}</p>
+        <p className="text-red-500">{errors.fullName.message as ReactNode}</p>
       )}
       <input
         type="date"
-        name="dateOfBirth"
+        // name="dateOfBirth"
         defaultValue={dateOfBirth}
         {...register("dateOfBirth")}
-        className="w-full mb-4 p-2 border"
+        className="w-full mb-4 p-2 focus:outline-none border-main bg-transparent rounded-md"
       />
       {errors.dateOfBirth && (
-        <p className="text-red-500">{errors.dateOfBirth.message}</p>
+        <p className="text-red-500">
+          {errors.dateOfBirth.message as ReactNode}
+        </p>
       )}
       <input
         type="text"
-        name="nationality"
+        // name="nationality"
         placeholder="Nationality"
         defaultValue={nationality}
         {...register("nationality")}
-        className="w-full mb-4 p-2 border"
+        className="w-full mb-4 p-2 focus:outline-none border-main bg-transparent rounded-md"
       />
       {errors.nationality && (
-        <p className="text-red-500">{errors.nationality.message}</p>
+        <p className="text-red-500">
+          {errors.nationality.message as ReactNode}
+        </p>
       )}
       <input
         type="email"
-        name="email"
+        // name="email"
         placeholder="Email"
         defaultValue={email}
         {...register("email")}
-        className="w-full mb-4 p-2 border"
+        className="w-full mb-4 p-2 focus:outline-none border-main bg-transparent rounded-md"
       />
-      {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+      {errors.email && (
+        <p className="text-red-500 w-full">
+          {errors.email.message as ReactNode}
+        </p>
+      )}
       <input
         type="tel"
-        name="phone"
+        // name="phone"
         placeholder="Phone"
         defaultValue={phone}
         {...register("phone")}
-        className="w-full mb-4 p-2 border"
+        className="w-full mb-4 p-2 focus:outline-none border-main bg-transparent rounded-md"
       />
-      {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+      {errors.phone && (
+        <p className="text-red-500">{errors.phone.message as ReactNode}</p>
+      )}
+      {/* <button type="submit" className="bg-blue-500 text-white p-2 rounded">
         Next
-      </button>
+      </button> */}
     </form>
   );
 };

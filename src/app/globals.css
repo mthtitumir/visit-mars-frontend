@@ -11,7 +11,7 @@ body {
 }
 
 .border-main {
-  @apply border border-[#383838];
+  @apply border border-amber-500;
 }
 
 /* Webkit-based browsers (Chrome, Safari) */
@@ -21,29 +21,22 @@ body {
 }
 @media (min-width: 768px) {
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
 }
 @media (min-width: 1024px) {
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 5px;
+    height: 5px;
   }
-}
-::-webkit-scrollbar-track {
-  /* background: rgb(14 165 233); */
-  /* background: #0A192F; */
-  /* border-radius: 16px; */
-  border-bottom-right-radius: 16px;
-  /* border: 1px solid #383838; */
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(7, 129, 186);
-  /* border-radius: 16px; */
-  border-bottom-right-radius: 16px;
-  border-top-left-radius: 16px;
-  border: 1px solid #383838;
+  background-color: rgb(237, 182, 17);
+  /* border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px; */
+  border-radius: 6px;
 }
 

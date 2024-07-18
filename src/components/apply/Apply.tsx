@@ -4,7 +4,7 @@ import PersonalInformation from "./PersonalInfo";
 import TravelPreferences from "./TravelPreferences";
 import HealthAndSafety from "./HealthAndSafety";
 import { useAppSelector } from "@/redux/hook";
-import ApplyForm from "./ApplyForm";
+import StepperComponent from "./StepperComponent";
 import { Button } from "@material-tailwind/react";
 import { useAppDispatch } from "@/redux/hook";
 import { nextStep, prevStep } from "@/redux/features/apply/applySlice";
@@ -35,19 +35,17 @@ const Apply = () => {
 
   return (
     <div className=" flex flex-col items-center justify-center ">
-      <ApplyForm activeStep={step - 1} />
+      <StepperComponent activeStep={step - 1} />
       <div className=" shadow-md rounded-lg ">
         {renderStep()}
       </div>
-      <div className="flex justify-between">
-        <Button color="gray" onClick={handleBack} disabled={step-1 === 0}>
+      <div className="flex justify-between gap-8 w-full">
+        <Button onClick={handleBack} disabled={step - 1 === 0} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
           Back
         </Button>
         <Button
-          color="blue"
           onClick={handleNext}
-          disabled={step-1 === 2}
-        >
+          disabled={step - 1 === 2} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}        >
           Nextt
         </Button>
       </div>
