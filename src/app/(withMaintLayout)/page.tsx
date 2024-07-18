@@ -35,8 +35,8 @@ export default function Home() {
           className="w-full h-full object-cover"
         />
         <div className="px-3 absolute inset-0 bg-[#0A192F] bg-opacity-60 flex items-center justify-center rounded-lg">
-          <div className="px-8 py-16 rounded-md border border-amber-500 flex flex-col items-center justify-center">
-            <h1 className="text-4xl font-bold mb-4">Journey to Mars</h1>
+          <div className="px-8 py-20 rounded-md border border-amber-500 flex flex-col items-center justify-center">
+            <h1 className="text-4xl font-bold">Journey to Mars</h1>
             <div className="text-xl my-4 text-justify">
               <p className="">
                 Join the pioneering mission to explore the Red Planet.
