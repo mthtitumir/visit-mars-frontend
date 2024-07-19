@@ -23,9 +23,9 @@ const Apply = () => {
   };
 
   return (
-    <div className=" flex flex-col items-center justify-center ">
+    <div className="">
       <StepperComponent activeStep={step - 1} />
-      <div className=" shadow-md rounded-lg ">
+      <div className="">
         {renderStep()}
       </div>
     </div>

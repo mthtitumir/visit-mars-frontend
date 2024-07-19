@@ -39,10 +39,6 @@ const HealthAndSafety = () => {
     dispatch(resetForm());
   };
 
-  const handleNext = () => {
-    dispatch(nextStep());
-  };
-
   const handleBack = () => {
     dispatch(prevStep());
   };
@@ -58,7 +54,6 @@ const HealthAndSafety = () => {
             placeholder="Emergency Phone Number"
             defaultValue={emergencyPhone}
             {...register("emergencyPhone")}
-            className="w-full mb-4 p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md"
           />
           {errors.emergencyPhone && (
             <p className="text-red-500">
@@ -73,7 +68,6 @@ const HealthAndSafety = () => {
             placeholder="Emergency Email"
             defaultValue={emergencyEmail}
             {...register("emergencyEmail")}
-            className="w-full mb-4 p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md"
           />
           {errors.emergencyEmail && (
             <p className="text-red-500">
@@ -102,15 +96,6 @@ const HealthAndSafety = () => {
       <div className="flex gap-3 items-center">
         <div className="w-full">
           <input type="checkbox" {...register("healthDeclaration")} defaultChecked={healthDeclaration} name="" id="" placeholder="Write any medical conditions or issues if have" />
-          <p></p>
-          {/* <label htmlFor="">Medical Conditions</label>
-          <textarea
-            cols={4}
-            rows={2}
-            placeholder="Write any medical conditions or issues if have"
-            defaultValue={medicalConditions}
-            {...register("medicalConditions")}
-          /> */}
           {errors.medicalConditions && (
             <p className="text-red-500">
               {errors.medicalConditions.message as ReactNode}

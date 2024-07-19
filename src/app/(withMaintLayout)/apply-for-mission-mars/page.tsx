@@ -1,4 +1,4 @@
-import Apply from "@/components/apply/Apply"
+import Apply from "@/components/apply/Apply";
 
 const ApplyForMissionMars = () => {
   return (
@@ -13,13 +13,13 @@ const ApplyForMissionMars = () => {
           className="w-full h-full object-cover"
         />
         <div className="w-full absolute inset-0 bg-[#0A192F] bg-opacity-70 flex items-center justify-center">
-          <div className="min-w-lg p-8 rounded-md border scroll-none border-amber-500 flex flex-col items-center justify-center max-h-[95vh] overflow-auto">
+          <div className="p-8 rounded border-main max-h-[98vh] m-1 overflow-auto">
             <Apply />
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ApplyForMissionMars
+export default ApplyForMissionMars;

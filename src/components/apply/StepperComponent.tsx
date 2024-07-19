@@ -19,7 +19,7 @@ const steps = [
 ];
 const StepperComponent = ({ activeStep }: { activeStep: number }) => {
   return (
-    <div className="w-full mx-auto py-4">
+    <div className="w-full mb-4">
       <Stepper
         activeStep={activeStep}
         placeholder={undefined}

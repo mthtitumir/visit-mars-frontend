@@ -8,6 +8,8 @@ import { Button } from "@material-tailwind/react";
 
 const schema = z.object({
   fullName: z.string().nonempty("Full Name is required"),
+  detailedAddress: z.string().nonempty("Detailed address is required"),
+  passportNo: z.string().nonempty("Passport no is required"),
   dateOfBirth: z.string().nonempty("Date of Birth is required"),
   nationality: z.string().nonempty("Nationality is required"),
   email: z.string().email("Invalid email address"),
@@ -39,14 +41,6 @@ const PersonalInformation = () => {
     console.log({ data });
     dispatch(updateApplyForm(data));
     dispatch(nextStep());
-  };
-
-  const handleNext = () => {
-    dispatch(nextStep());
-  };
-
-  const handleBack = () => {
-    dispatch(prevStep());
   };
 
   return (
@@ -156,7 +150,6 @@ const PersonalInformation = () => {
       </div>
       <div className="flex flex-col md:flex-row justify-between gap-8 w-full">
         <Button
-          onClick={handleBack}
           disabled={step - 1 === 0}
           placeholder={undefined}
           onPointerEnterCapture={undefined}
@@ -165,14 +158,13 @@ const PersonalInformation = () => {
           Back
         </Button>
         <Button
-          // onClick={handleNext}
           type="submit"
           disabled={step - 1 === 2}
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
         >
-          Nextt
+          Next
         </Button>
       </div>
     </form>
