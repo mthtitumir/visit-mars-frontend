@@ -34,7 +34,6 @@ const StepperComponent = ({ activeStep }: { activeStep: number }) => {
             onPointerEnterCapture
             onPointerLeaveCapture
             className="!bg-gray-800"
-            // completedClassName="text-white"
             activeClassName="border-main"
           >
             <step.icon className="text-amber-500" />

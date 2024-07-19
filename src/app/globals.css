@@ -14,8 +14,15 @@ body {
   @apply border border-amber-500;
 }
 
-input, textarea, select, option{
+input,
+textarea,
+select,
+option {
   @apply w-full p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md;
+}
+
+.form-section-div {
+  @apply flex flex-col md:flex-row gap-3 items-center mb-2;
 }
 
 /* Webkit-based browsers (Chrome, Safari) */
@@ -41,7 +48,6 @@ input, textarea, select, option{
   /* border-bottom-right-radius: 6px;
   border-top-right-radius: 6px;
   border-top-left-radius: 6px; */
-  border: gray;
+  /* border:2px solid rgb(165, 1, 1); */
   border-radius: 6px;
 }
-

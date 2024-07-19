@@ -1,20 +1,12 @@
 import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { nextStep, prevStep, updateApplyForm } from "@/redux/features/apply/applySlice";
+import { nextStep, updateApplyForm } from "@/redux/features/apply/applySlice";
 import { Button } from "@material-tailwind/react";
-
-const schema = z.object({
-  fullName: z.string().nonempty("Full Name is required"),
-  detailedAddress: z.string().nonempty("Detailed address is required"),
-  passportNo: z.string().nonempty("Passport no is required"),
-  dateOfBirth: z.string().nonempty("Date of Birth is required"),
-  nationality: z.string().nonempty("Nationality is required"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().nonempty("Phone number is required"),
-});
+import { personalInfoSchema } from "@/schemas";
+import FormHeading from "./FormHeading";
+import { icons } from "@/icons";
 
 const PersonalInformation = () => {
   const dispatch = useAppDispatch();
@@ -34,7 +26,7 @@ const PersonalInformation = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(personalInfoSchema),
   });
 
   const onSubmit = (data: any) => {
@@ -45,8 +37,8 @@ const PersonalInformation = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className=" mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Personal Information</h2>
-      <div className="flex flex-col md:flex-row gap-3 items-center">
+      <FormHeading text="Personal Information" />
+      <div className="form-section-div">
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Full Name</label>
           <input
@@ -74,7 +66,7 @@ const PersonalInformation = () => {
           )}
         </div>
       </div>
-      <div className="flex flex-col md:flex-row gap-3 items-center">
+      <div className="form-section-div">
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Phone Number</label>
           <input
@@ -102,7 +94,7 @@ const PersonalInformation = () => {
           )}
         </div>
       </div>
-      <div className="flex flex-col md:flex-row gap-3 items-center">
+      <div className="form-section-div">
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Date of Birth</label>
           <input
@@ -131,7 +123,7 @@ const PersonalInformation = () => {
           )}
         </div>
       </div>
-      <div className="flex flex-col md:flex-row gap-3 items-center">
+      <div className="form-section-div">
         <div className="w-full">
           <label htmlFor="">Detailed Address</label>
           <textarea
@@ -148,14 +140,14 @@ const PersonalInformation = () => {
           )}
         </div>
       </div>
-      <div className="flex flex-col md:flex-row justify-between gap-8 w-full">
+      <div className="flex flex-col md:flex-row justify-between w-full">
         <Button
           disabled={step - 1 === 0}
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
         >
-          Back
+          <icons.stepper.arrowLeft />
         </Button>
         <Button
           type="submit"
@@ -163,8 +155,9 @@ const PersonalInformation = () => {
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
+          className="border-main"
         >
-          Next
+          <icons.stepper.arrowRight />
         </Button>
       </div>
     </form>

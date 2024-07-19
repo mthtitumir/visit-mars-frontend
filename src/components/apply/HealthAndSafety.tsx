@@ -1,18 +1,12 @@
 import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { nextStep, prevStep, resetForm, updateApplyForm } from "@/redux/features/apply/applySlice";
+import { prevStep, resetForm, updateApplyForm } from "@/redux/features/apply/applySlice";
 import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
-
-const schema = z.object({
-  healthDeclaration: z.boolean(),
-  medicalConditions: z.string().optional(),
-  emergencyEmail: z.string().email("Invalid emergency email address"),
-  emergencyPhone: z.string().nonempty("Emergency phone number is required"),
-});
+import { healthAndSafetySchema } from "@/schemas";
+import FormHeading from "./FormHeading";
 
 const HealthAndSafety = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +23,7 @@ const HealthAndSafety = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(healthAndSafetySchema),
   });
 
   const onSubmit = (data: any) => {
@@ -45,8 +39,8 @@ const HealthAndSafety = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className=" mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Health & Safety</h2>
-      <div className="flex gap-3 items-center">
+      <FormHeading text="Health & Safety"/>
+      <div className="form-section-div">
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Emergency Phone Number</label>
           <input
@@ -76,7 +70,7 @@ const HealthAndSafety = () => {
           )}
         </div>
       </div>
-      <div className="flex gap-3 items-center">
+      <div className="form-section-div">
         <div className="w-full">
           <label htmlFor="">Medical Conditions</label>
           <textarea
@@ -93,7 +87,7 @@ const HealthAndSafety = () => {
           )}
         </div>
       </div>
-      <div className="flex gap-3 items-center">
+      <div className="form-section-div">
         <div className="w-full">
           <input type="checkbox" {...register("healthDeclaration")} defaultChecked={healthDeclaration} name="" id="" placeholder="Write any medical conditions or issues if have" />
           {errors.medicalConditions && (

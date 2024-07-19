@@ -1,18 +1,15 @@
 import React, { ReactNode } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { nextStep, prevStep, updateApplyForm } from "@/redux/features/apply/applySlice";
+import {
+  nextStep,
+  prevStep,
+  updateApplyForm,
+} from "@/redux/features/apply/applySlice";
 import { Button } from "@material-tailwind/react";
-
-const schema = z.object({
-  departureDate: z.string().nonempty("Departure date is required"),
-  returnDate: z.string().nonempty("Return date is required"),
-  specialRequests: z.string().nonempty("Special requests is required"),
-  spaceHotel: z.string().optional(),
-  martianBase: z.string().optional(),
-});
+import { travelPreferencesSchema } from "@/schemas";
+import FormHeading from "./FormHeading";
 
 const TravelPreferences = () => {
   const dispatch = useAppDispatch();
@@ -30,15 +27,11 @@ const TravelPreferences = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(travelPreferencesSchema),
   });
 
   const onSubmit = (data: FieldValues) => {
     dispatch(updateApplyForm(data));
-    dispatch(nextStep());
-  };
-
-  const handleNext = () => {
     dispatch(nextStep());
   };
 
@@ -48,8 +41,8 @@ const TravelPreferences = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className=" mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Travel Preferences</h2>
-      <div className="flex gap-3 items-center">
+      <FormHeading text="Travel Preferences" />
+      <div className="form-section-div">
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Departure Date</label>
           <input
@@ -79,10 +72,10 @@ const TravelPreferences = () => {
           )}
         </div>
       </div>
-      <div className="flex gap-3 items-center">
+      <div className="form-section-div">
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Space Hotel</label>
-          <select defaultValue={spaceHotel}>
+          <select defaultValue={spaceHotel} {...register("spaceHotel")}>
             <option value="ABC Hotel">ABC Hotel</option>
             <option value="XYZ Hotel">XYZ Hotel</option>
             <option value="Mars Nigga">Mars Niggas</option>
@@ -97,7 +90,7 @@ const TravelPreferences = () => {
         </div>
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Martian Base</label>
-          <select defaultValue={martianBase}>
+          <select defaultValue={martianBase} {...register("martianBase")}>
             <option value="Base 71">Base 71</option>
             <option value="Base Robin">Base Robin</option>
             <option value="Base CN">Base CN</option>
@@ -109,12 +102,12 @@ const TravelPreferences = () => {
           )}
         </div>
       </div>
-      <div className="flex gap-3 items-center">
+      <div className="form-section-div">
         <div className="w-full">
           <label htmlFor="">Special Requests / Notes</label>
           <textarea
             cols={4}
-            rows={1}
+            rows={2}
             placeholder="Special Requests / Notes (if have)"
             defaultValue={specialRequests}
             {...register("specialRequests")}
