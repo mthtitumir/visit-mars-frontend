@@ -3,14 +3,15 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { nextStep, updateApplyForm } from "@/redux/features/apply/applySlice";
+import { nextStep, prevStep, updateApplyForm } from "@/redux/features/apply/applySlice";
+import { Button } from "@material-tailwind/react";
 
 const schema = z.object({
   departureDate: z.string().nonempty("Departure date is required"),
   returnDate: z.string().nonempty("Return date is required"),
   specialRequests: z.string().nonempty("Special requests is required"),
-  spaceHotel: z.string().nonempty("Space hotel is required"),
-  martianBase: z.string().nonempty("Martian base is required"),
+  spaceHotel: z.string().optional(),
+  martianBase: z.string().optional(),
 });
 
 const TravelPreferences = () => {
@@ -22,6 +23,7 @@ const TravelPreferences = () => {
     spaceHotel,
     martianBase,
   } = useAppSelector((state) => state.apply.form);
+  const step = useAppSelector((state) => state.apply.step);
 
   const {
     register,
@@ -34,6 +36,14 @@ const TravelPreferences = () => {
   const onSubmit = (data: FieldValues) => {
     dispatch(updateApplyForm(data));
     dispatch(nextStep());
+  };
+
+  const handleNext = () => {
+    dispatch(nextStep());
+  };
+
+  const handleBack = () => {
+    dispatch(prevStep());
   };
 
   return (
@@ -116,9 +126,27 @@ const TravelPreferences = () => {
           )}
         </div>
       </div>
-      {/* <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-        Next
-      </button> */}
+      <div className="flex justify-between gap-8 w-full">
+        <Button
+          onClick={handleBack}
+          disabled={step - 1 === 0}
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          Back
+        </Button>
+        <Button
+          // onClick={handleNext}
+          type="submit"
+          disabled={step - 1 === 2}
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          Nextt
+        </Button>
+      </div>
     </form>
   );
 };

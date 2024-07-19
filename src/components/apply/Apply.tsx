@@ -5,21 +5,10 @@ import TravelPreferences from "./TravelPreferences";
 import HealthAndSafety from "./HealthAndSafety";
 import { useAppSelector } from "@/redux/hook";
 import StepperComponent from "./StepperComponent";
-import { Button } from "@material-tailwind/react";
-import { useAppDispatch } from "@/redux/hook";
-import { nextStep, prevStep } from "@/redux/features/apply/applySlice";
 
 const Apply = () => {
   const step = useAppSelector((state) => state.apply.step);
-  const dispatch = useAppDispatch();
 
-  const handleNext = () => {
-    dispatch(nextStep());
-  };
-
-  const handleBack = () => {
-    dispatch(prevStep());
-  };
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -38,16 +27,6 @@ const Apply = () => {
       <StepperComponent activeStep={step - 1} />
       <div className=" shadow-md rounded-lg ">
         {renderStep()}
-      </div>
-      <div className="flex justify-between gap-8 w-full">
-        <Button onClick={handleBack} disabled={step - 1 === 0} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-          Back
-        </Button>
-        <Button
-          onClick={handleNext}
-          disabled={step - 1 === 2} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}        >
-          Nextt
-        </Button>
       </div>
     </div>
   );

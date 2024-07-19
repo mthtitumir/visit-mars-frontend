@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     step: 1,
     form: {
+        // personal info 
         fullName: '',
         email: '',
         phone: '',
@@ -10,13 +11,16 @@ const initialState = {
         dateOfBirth: '',
         nationality: '',
         detailedAddress: '',
+        // travel preferences 
         departureDate: '',
         returnDate: '',
         spaceHotel: '',
         martianBase: '',
         specialRequests: '',
+        // health and safety 
         healthDeclaration: false,
-        emergencyContactInformation: '',
+        emergencyPhone: '',
+        emergencyEmail: '',
         medicalConditions: '',
     },
 };
@@ -43,6 +47,6 @@ const applySlice = createSlice({
     },
 })
 
-export const {nextStep, prevStep, updateApplyForm, resetForm} = applySlice.actions;
+export const { nextStep, prevStep, updateApplyForm, resetForm } = applySlice.actions;
 
 export default applySlice.reducer;

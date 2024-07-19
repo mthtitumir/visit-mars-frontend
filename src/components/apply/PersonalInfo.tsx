@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { nextStep, updateApplyForm } from "@/redux/features/apply/applySlice";
+import { nextStep, prevStep, updateApplyForm } from "@/redux/features/apply/applySlice";
+import { Button } from "@material-tailwind/react";
 
 const schema = z.object({
   fullName: z.string().nonempty("Full Name is required"),
@@ -24,6 +25,7 @@ const PersonalInformation = () => {
     passportNo,
     detailedAddress,
   } = useAppSelector((state) => state.apply.form);
+  const step = useAppSelector((state) => state.apply.step);
 
   const {
     register,
@@ -39,10 +41,18 @@ const PersonalInformation = () => {
     dispatch(nextStep());
   };
 
+  const handleNext = () => {
+    dispatch(nextStep());
+  };
+
+  const handleBack = () => {
+    dispatch(prevStep());
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className=" mx-auto">
       <h2 className="text-2xl font-bold mb-4">Personal Information</h2>
-      <div className="flex gap-3 items-center">
+      <div className="flex flex-col md:flex-row gap-3 items-center">
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Full Name</label>
           <input
@@ -50,7 +60,6 @@ const PersonalInformation = () => {
             placeholder="Full Name"
             defaultValue={fullName}
             {...register("fullName")}
-            className="w-full mb-4 p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md"
           />
           {errors.fullName && (
             <p className="text-red-500">
@@ -65,14 +74,13 @@ const PersonalInformation = () => {
             placeholder="Email"
             defaultValue={email}
             {...register("email")}
-            className="w-full mb-4 p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md"
           />
           {errors.email && (
             <p className="text-red-500">{errors.email.message as ReactNode}</p>
           )}
         </div>
       </div>
-      <div className="flex gap-3 items-center">
+      <div className="flex flex-col md:flex-row gap-3 items-center">
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Phone Number</label>
           <input
@@ -80,7 +88,6 @@ const PersonalInformation = () => {
             placeholder="Phone Number"
             defaultValue={phone}
             {...register("phone")}
-            className="w-full mb-4 p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md"
           />
           {errors.phone && (
             <p className="text-red-500">{errors.phone.message as ReactNode}</p>
@@ -93,7 +100,6 @@ const PersonalInformation = () => {
             placeholder="Passport No."
             defaultValue={passportNo}
             {...register("passportNo")}
-            className="w-full mb-4 p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md"
           />
           {errors.passportNo && (
             <p className="text-red-500">
@@ -102,14 +108,13 @@ const PersonalInformation = () => {
           )}
         </div>
       </div>
-      <div className="flex gap-3 items-center">
+      <div className="flex flex-col md:flex-row gap-3 items-center">
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Date of Birth</label>
           <input
             type="date"
             defaultValue={dateOfBirth}
             {...register("dateOfBirth")}
-            className="w-full mb-4 p-2 focus:outline-none border-main bg-transparent rounded-md"
           />
           {errors.dateOfBirth && (
             <p className="text-red-500">
@@ -124,7 +129,6 @@ const PersonalInformation = () => {
             placeholder="Nationality"
             defaultValue={nationality}
             {...register("nationality")}
-            className="w-full mb-4 p-2 focus:outline-none border-main bg-transparent rounded-md"
           />
           {errors.nationality && (
             <p className="text-red-500">
@@ -133,12 +137,12 @@ const PersonalInformation = () => {
           )}
         </div>
       </div>
-      <div className="flex gap-3 items-center">
+      <div className="flex flex-col md:flex-row gap-3 items-center">
         <div className="w-full">
           <label htmlFor="">Detailed Address</label>
           <textarea
-          cols={4}
-          rows={1}
+            cols={4}
+            rows={1}
             placeholder="Detailed Address"
             defaultValue={detailedAddress}
             {...register("detailedAddress")}
@@ -150,9 +154,27 @@ const PersonalInformation = () => {
           )}
         </div>
       </div>
-      {/* <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-        Next
-      </button> */}
+      <div className="flex flex-col md:flex-row justify-between gap-8 w-full">
+        <Button
+          onClick={handleBack}
+          disabled={step - 1 === 0}
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          Back
+        </Button>
+        <Button
+          // onClick={handleNext}
+          type="submit"
+          disabled={step - 1 === 2}
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          Nextt
+        </Button>
+      </div>
     </form>
   );
 };

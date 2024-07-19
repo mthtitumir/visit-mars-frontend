@@ -1,23 +1,28 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { nextStep, updateApplyForm } from "@/redux/features/apply/applySlice";
+import { nextStep, prevStep, resetForm, updateApplyForm } from "@/redux/features/apply/applySlice";
+import { Button } from "@material-tailwind/react";
+import toast from "react-hot-toast";
 
 const schema = z.object({
-  fullName: z.string().nonempty("Full Name is required"),
-  dateOfBirth: z.string().nonempty("Date of Birth is required"),
-  nationality: z.string().nonempty("Nationality is required"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().nonempty("Phone number is required"),
+  healthDeclaration: z.boolean(),
+  medicalConditions: z.string().optional(),
+  emergencyEmail: z.string().email("Invalid emergency email address"),
+  emergencyPhone: z.string().nonempty("Emergency phone number is required"),
 });
 
 const HealthAndSafety = () => {
   const dispatch = useAppDispatch();
-  const { fullName, dateOfBirth, nationality, email, phone } = useAppSelector(
-    (state) => state.apply.form
-  );
+  const {
+    emergencyPhone,
+    emergencyEmail,
+    medicalConditions,
+    healthDeclaration
+  } = useAppSelector((state) => state.apply.form);
+  const step = useAppSelector((state) => state.apply.step);
 
   const {
     register,
@@ -27,67 +32,115 @@ const HealthAndSafety = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
+    console.log({ data });
     dispatch(updateApplyForm(data));
+    toast.success("Applied");
+    dispatch(resetForm());
+  };
+
+  const handleNext = () => {
     dispatch(nextStep());
   };
 
+  const handleBack = () => {
+    dispatch(prevStep());
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
+    <form onSubmit={handleSubmit(onSubmit)} className=" mx-auto">
       <h2 className="text-2xl font-bold mb-4">Health & Safety</h2>
-      <input
-        type="text"
-        name="fullName"
-        placeholder="Full Name"
-        defaultValue={fullName}
-        {...register("fullName")}
-        className="w-full mb-4 p-2 border"
-      />
-      {errors.fullName && (
-        <p className="text-red-500">{errors.fullName.message}</p>
-      )}
-      <input
-        type="date"
-        name="dateOfBirth"
-        defaultValue={dateOfBirth}
-        {...register("dateOfBirth")}
-        className="w-full mb-4 p-2 border"
-      />
-      {errors.dateOfBirth && (
-        <p className="text-red-500">{errors.dateOfBirth.message}</p>
-      )}
-      <input
-        type="text"
-        name="nationality"
-        placeholder="Nationality"
-        defaultValue={nationality}
-        {...register("nationality")}
-        className="w-full mb-4 p-2 border"
-      />
-      {errors.nationality && (
-        <p className="text-red-500">{errors.nationality.message}</p>
-      )}
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        defaultValue={email}
-        {...register("email")}
-        className="w-full mb-4 p-2 border"
-      />
-      {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-      <input
-        type="tel"
-        name="phone"
-        placeholder="Phone"
-        defaultValue={phone}
-        {...register("phone")}
-        className="w-full mb-4 p-2 border"
-      />
-      {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+      <div className="flex gap-3 items-center">
+        <div className="w-full lg:w-1/2">
+          <label htmlFor="">Emergency Phone Number</label>
+          <input
+            type="text"
+            placeholder="Emergency Phone Number"
+            defaultValue={emergencyPhone}
+            {...register("emergencyPhone")}
+            className="w-full mb-4 p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md"
+          />
+          {errors.emergencyPhone && (
+            <p className="text-red-500">
+              {errors.emergencyPhone.message as ReactNode}
+            </p>
+          )}
+        </div>
+        <div className="w-full lg:w-1/2">
+          <label htmlFor="">Emergency Email</label>
+          <input
+            type="text"
+            placeholder="Emergency Email"
+            defaultValue={emergencyEmail}
+            {...register("emergencyEmail")}
+            className="w-full mb-4 p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md"
+          />
+          {errors.emergencyEmail && (
+            <p className="text-red-500">
+              {errors.emergencyEmail.message as ReactNode}
+            </p>
+          )}
+        </div>
+      </div>
+      <div className="flex gap-3 items-center">
+        <div className="w-full">
+          <label htmlFor="">Medical Conditions</label>
+          <textarea
+            cols={4}
+            rows={2}
+            placeholder="Write any medical conditions or issues if have"
+            defaultValue={medicalConditions}
+            {...register("medicalConditions")}
+          />
+          {errors.medicalConditions && (
+            <p className="text-red-500">
+              {errors.medicalConditions.message as ReactNode}
+            </p>
+          )}
+        </div>
+      </div>
+      <div className="flex gap-3 items-center">
+        <div className="w-full">
+          <input type="checkbox" {...register("healthDeclaration")} defaultChecked={healthDeclaration} name="" id="" placeholder="Write any medical conditions or issues if have" />
+          <p></p>
+          {/* <label htmlFor="">Medical Conditions</label>
+          <textarea
+            cols={4}
+            rows={2}
+            placeholder="Write any medical conditions or issues if have"
+            defaultValue={medicalConditions}
+            {...register("medicalConditions")}
+          /> */}
+          {errors.medicalConditions && (
+            <p className="text-red-500">
+              {errors.medicalConditions.message as ReactNode}
+            </p>
+          )}
+        </div>
+      </div>
+      {/* <button type="submit" className="bg-blue-500 text-white p-2 rounded">
         Next
-      </button>
+      </button> */}
+      <div className="flex justify-between gap-8 w-full">
+        <Button
+          onClick={handleBack}
+          disabled={step - 1 === 0}
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          Back
+        </Button>
+        <Button
+          // onClick={handleNext}
+          type="submit"
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          Submit
+        </Button>
+      </div>
     </form>
   );
 };
