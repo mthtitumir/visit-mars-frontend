@@ -14,7 +14,7 @@ body {
   @apply border border-amber-500;
 }
 
-input, textarea{
+input, textarea, select, option{
   @apply w-full mb-4 p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md;
 }
 

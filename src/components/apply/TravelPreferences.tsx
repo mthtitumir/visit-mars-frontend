@@ -1,23 +1,27 @@
 import React, { ReactNode } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { nextStep, updateApplyForm } from "@/redux/features/apply/applySlice";
 
 const schema = z.object({
-  fullName: z.string().nonempty("Full Name is required"),
-  dateOfBirth: z.string().nonempty("Date of Birth is required"),
-  nationality: z.string().nonempty("Nationality is required"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().nonempty("Phone number is required"),
+  departureDate: z.string().nonempty("Departure date is required"),
+  returnDate: z.string().nonempty("Return date is required"),
+  specialRequests: z.string().nonempty("Special requests is required"),
+  spaceHotel: z.string().nonempty("Space hotel is required"),
+  martianBase: z.string().nonempty("Martian base is required"),
 });
 
 const TravelPreferences = () => {
   const dispatch = useAppDispatch();
-  const { departureDate, returnDate, nationality, email, phone } = useAppSelector(
-    (state) => state.apply.form
-  );
+  const {
+    departureDate,
+    returnDate,
+    specialRequests,
+    spaceHotel,
+    martianBase,
+  } = useAppSelector((state) => state.apply.form);
 
   const {
     register,
@@ -27,61 +31,94 @@ const TravelPreferences = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: FieldValues) => {
     dispatch(updateApplyForm(data));
     dispatch(nextStep());
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
+    <form onSubmit={handleSubmit(onSubmit)} className=" mx-auto">
       <h2 className="text-2xl font-bold mb-4">Travel Preferences</h2>
-      <input
-        type="date"
-        defaultValue={departureDate}
-        {...register("departureDate")}
-        className="w-full mb-4 p-2 border"
-      />
-      {errors.departureDate && (
-        <p className="text-red-500">{errors.departureDate.message as ReactNode}</p>
-      )}
-      <input
-        type="date"
-        defaultValue={returnDate}
-        {...register("returnDate")}
-        className="w-full mb-4 p-2 border"
-      />
-      {errors.returnDate && (
-        <p className="text-red-500">{errors.returnDate.message as ReactNode}</p>
-      )}
-      <input
-        type="text"
-        placeholder="Nationality"
-        defaultValue={nationality}
-        {...register("nationality")}
-        className="w-full mb-4 p-2 border"
-      />
-      {errors.nationality && (
-        <p className="text-red-500">{errors.nationality.message}</p>
-      )}
-      <input
-        type="email"
-        placeholder="Email"
-        defaultValue={email}
-        {...register("email")}
-        className="w-full mb-4 p-2 border"
-      />
-      {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-      <input
-        type="tel"
-        placeholder="Phone"
-        defaultValue={phone}
-        {...register("phone")}
-        className="w-full mb-4 p-2 border"
-      />
-      {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+      <div className="flex gap-3 items-center">
+        <div className="w-full lg:w-1/2">
+          <label htmlFor="">Departure Date</label>
+          <input
+            type="date"
+            defaultValue={departureDate}
+            {...register("departureDate")}
+            className="w-full mb-4 p-2 border"
+          />
+          {errors.departureDate && (
+            <p className="text-red-500">
+              {errors.departureDate.message as ReactNode}
+            </p>
+          )}
+        </div>
+        <div className="w-full lg:w-1/2">
+          <label htmlFor="">Return Date</label>
+          <input
+            type="date"
+            defaultValue={returnDate}
+            {...register("returnDate")}
+            className="w-full mb-4 p-2 border"
+          />
+          {errors.returnDate && (
+            <p className="text-red-500">
+              {errors.returnDate.message as ReactNode}
+            </p>
+          )}
+        </div>
+      </div>
+      <div className="flex gap-3 items-center">
+        <div className="w-full lg:w-1/2">
+          <label htmlFor="">Space Hotel</label>
+          <select defaultValue={spaceHotel}>
+            <option value="ABC Hotel">ABC Hotel</option>
+            <option value="XYZ Hotel">XYZ Hotel</option>
+            <option value="Mars Nigga">Mars Niggas</option>
+            <option value="Mars Heaven">Mars Heaven</option>
+            <option value="Mars Monday">Mars Monday</option>
+          </select>
+          {errors.spaceHotel && (
+            <p className="text-red-500">
+              {errors.spaceHotel.message as ReactNode}
+            </p>
+          )}
+        </div>
+        <div className="w-full lg:w-1/2">
+          <label htmlFor="">Martian Base</label>
+          <select defaultValue={martianBase}>
+            <option value="Base 71">Base 71</option>
+            <option value="Base Robin">Base Robin</option>
+            <option value="Base CN">Base CN</option>
+          </select>
+          {errors.martianBase && (
+            <p className="text-red-500">
+              {errors.martianBase.message as ReactNode}
+            </p>
+          )}
+        </div>
+      </div>
+      <div className="flex gap-3 items-center">
+        <div className="w-full">
+          <label htmlFor="">Special Requests / Notes</label>
+          <textarea
+            cols={4}
+            rows={1}
+            placeholder="Special Requests / Notes (if have)"
+            defaultValue={specialRequests}
+            {...register("specialRequests")}
+          />
+          {errors.specialRequests && (
+            <p className="text-red-500">
+              {errors.specialRequests.message as ReactNode}
+            </p>
+          )}
+        </div>
+      </div>
+      {/* <button type="submit" className="bg-blue-500 text-white p-2 rounded">
         Next
-      </button>
+      </button> */}
     </form>
   );
 };
