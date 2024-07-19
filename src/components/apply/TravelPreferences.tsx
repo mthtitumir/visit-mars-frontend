@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -15,7 +15,7 @@ const schema = z.object({
 
 const TravelPreferences = () => {
   const dispatch = useAppDispatch();
-  const { fullName, dateOfBirth, nationality, email, phone } = useAppSelector(
+  const { departureDate, returnDate, nationality, email, phone } = useAppSelector(
     (state) => state.apply.form
   );
 
@@ -36,29 +36,25 @@ const TravelPreferences = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
       <h2 className="text-2xl font-bold mb-4">Travel Preferences</h2>
       <input
-        type="text"
-        name="fullName"
-        placeholder="Full Name"
-        defaultValue={fullName}
-        {...register("fullName")}
+        type="date"
+        defaultValue={departureDate}
+        {...register("departureDate")}
         className="w-full mb-4 p-2 border"
       />
-      {errors.fullName && (
-        <p className="text-red-500">{errors.fullName.message}</p>
+      {errors.departureDate && (
+        <p className="text-red-500">{errors.departureDate.message as ReactNode}</p>
       )}
       <input
         type="date"
-        name="dateOfBirth"
-        defaultValue={dateOfBirth}
-        {...register("dateOfBirth")}
+        defaultValue={returnDate}
+        {...register("returnDate")}
         className="w-full mb-4 p-2 border"
       />
-      {errors.dateOfBirth && (
-        <p className="text-red-500">{errors.dateOfBirth.message}</p>
+      {errors.returnDate && (
+        <p className="text-red-500">{errors.returnDate.message as ReactNode}</p>
       )}
       <input
         type="text"
-        name="nationality"
         placeholder="Nationality"
         defaultValue={nationality}
         {...register("nationality")}
@@ -69,7 +65,6 @@ const TravelPreferences = () => {
       )}
       <input
         type="email"
-        name="email"
         placeholder="Email"
         defaultValue={email}
         {...register("email")}
@@ -78,7 +73,6 @@ const TravelPreferences = () => {
       {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       <input
         type="tel"
-        name="phone"
         placeholder="Phone"
         defaultValue={phone}
         {...register("phone")}

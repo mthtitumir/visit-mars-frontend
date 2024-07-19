@@ -1,53 +1,8 @@
-import { HiOutlineMail } from "react-icons/hi";
-import { IoPhonePortraitOutline, IoLocationOutline } from "react-icons/io5";
-import { FaFacebook, FaLinkedin, FaTwitterSquare, FaInstagram, FaGithubSquare, FaRegLightbulb, FaAward, FaWhatsappSquare, FaUser } from "react-icons/fa";
-import { SiCodeforces, SiReadthedocs } from "react-icons/si";
-import { TbWorld } from "react-icons/tb";
-import { MdOutlineMenuBook, MdManageAccounts, MdApps, MdOutlineLibraryBooks, MdOutlineHome, MdHealthAndSafety } from "react-icons/md";
-import { PiDevToLogo, PiTextItalicThin } from "react-icons/pi";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { LuBookPlus } from "react-icons/lu";
-import { AiOutlineAppstore, AiOutlineAppstoreAdd } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
+import { MdHealthAndSafety } from "react-icons/md";
 import { BsAirplane } from "react-icons/bs";
 
-
 export const icons = {
-    contact: {
-        email: HiOutlineMail,
-        phone: IoPhonePortraitOutline,
-        location: IoLocationOutline,
-        whatsApp: FaWhatsappSquare,
-    },
-    social: {
-        facebook: FaFacebook,
-        linkedIn: FaLinkedin,
-        twitter: FaTwitterSquare,
-        instagram: FaInstagram,
-        github: FaGithubSquare,
-        codeForces: SiCodeforces,
-        devTo: PiDevToLogo,
-        resume: SiReadthedocs,
-        browser: TbWorld,
-    },
-    resume: {
-        education: MdOutlineMenuBook,
-        experience: MdManageAccounts,
-        projects: MdApps,
-        skills: FaRegLightbulb,
-        language: TbWorld,
-        certificate: FaAward
-    },
-    utils: {
-        arrowDown: IoIosArrowDown,
-        arrowUp: IoIosArrowUp,
-    },
-    dashboard: {
-        blogs: MdOutlineLibraryBooks,
-        projects: AiOutlineAppstore,
-        newBlog: LuBookPlus,
-        newProject: AiOutlineAppstoreAdd,
-        home: MdOutlineHome
-    },
     stepper: {
         user: FaUser,
         plane: BsAirplane,
