@@ -8,7 +8,7 @@ const initialState = {
         email: '',
         phone: '',
         passportNo: "",
-        dateOfBirth: '',
+        dateOfBirth: "",
         nationality: '',
         detailedAddress: '',
         // travel preferences 

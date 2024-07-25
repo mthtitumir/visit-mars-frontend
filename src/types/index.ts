@@ -9,14 +9,16 @@ export type TForm = {
     email: string;
     phone: string;
     passportNo: string;
-    dateOfBirth: string;
+    dateOfBirth: Date | string;
     nationality: string;
     detailedAddress: string;
     departureDate: string;
     returnDate: string;
-    accommodationPreference: string,
+    spaceHotel: string,
+    martianBase: string,
     specialRequests: string,
     healthDeclaration: boolean,
-    emergencyContactInformation: string,
+    emergencyPhone: string,
+    emergencyEmail: string,
     medicalConditions: string;
 }

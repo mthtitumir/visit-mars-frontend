@@ -2,11 +2,18 @@ import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { prevStep, resetForm, updateApplyForm } from "@/redux/features/apply/applySlice";
+import {
+  nextStep,
+  prevStep,
+  resetForm,
+  updateApplyForm,
+} from "@/redux/features/apply/applySlice";
 import { Button } from "@material-tailwind/react";
-import toast from "react-hot-toast";
 import { healthAndSafetySchema } from "@/schemas";
 import FormHeading from "./FormHeading";
+import { icons } from "@/icons";
+import BackButton from "./BackButton";
+import Link from "next/link";
 
 const HealthAndSafety = () => {
   const dispatch = useAppDispatch();
@@ -14,9 +21,8 @@ const HealthAndSafety = () => {
     emergencyPhone,
     emergencyEmail,
     medicalConditions,
-    healthDeclaration
+    healthDeclaration,
   } = useAppSelector((state) => state.apply.form);
-  const step = useAppSelector((state) => state.apply.step);
 
   const {
     register,
@@ -27,19 +33,13 @@ const HealthAndSafety = () => {
   });
 
   const onSubmit = (data: any) => {
-    console.log({ data });
     dispatch(updateApplyForm(data));
-    toast.success("Applied");
-    dispatch(resetForm());
-  };
-
-  const handleBack = () => {
-    dispatch(prevStep());
+    dispatch(nextStep());
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className=" mx-auto">
-      <FormHeading text="Health & Safety"/>
+      <FormHeading text="Health & Safety" />
       <div className="form-section-div">
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Emergency Phone Number</label>
@@ -88,36 +88,32 @@ const HealthAndSafety = () => {
         </div>
       </div>
       <div className="form-section-div">
-        <div className="w-full">
-          <input type="checkbox" {...register("healthDeclaration")} defaultChecked={healthDeclaration} name="" id="" placeholder="Write any medical conditions or issues if have" />
-          {errors.medicalConditions && (
-            <p className="text-red-500">
-              {errors.medicalConditions.message as ReactNode}
-            </p>
-          )}
+        <div className="flex gap-3">
+          <input
+            type="checkbox"
+            {...register("healthDeclaration")}
+            defaultChecked={healthDeclaration}
+            className="w-4"
+          />
+          <h1>Accept all <Link href="#" className="text-blue-500">terms & conditions</Link></h1>
         </div>
+        {errors.medicalConditions && (
+          <p className="text-red-500">
+            {errors.medicalConditions.message as ReactNode}
+          </p>
+        )}
       </div>
-      {/* <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-        Next
-      </button> */}
       <div className="flex justify-between gap-8 w-full">
+        <BackButton />
         <Button
-          onClick={handleBack}
-          disabled={step - 1 === 0}
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-        >
-          Back
-        </Button>
-        <Button
-          // onClick={handleNext}
           type="submit"
+          // onClick={() => dispatch(nextStep())}
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
+          className="border-main text-amber-500 "
         >
-          Submit
+          <icons.stepper.arrowRight size={20} />
         </Button>
       </div>
     </form>

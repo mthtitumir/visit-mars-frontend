@@ -1,12 +1,16 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { nextStep, updateApplyForm } from "@/redux/features/apply/applySlice";
-import { Button } from "@material-tailwind/react";
+import { Button, Input, Popover, PopoverContent, PopoverHandler } from "@material-tailwind/react";
 import { personalInfoSchema } from "@/schemas";
 import FormHeading from "./FormHeading";
 import { icons } from "@/icons";
+import BackButton from "./BackButton";
+import { DayPicker, getDefaultClassNames } from "react-day-picker";
+import { format } from "date-fns";
+import "react-day-picker/style.css";
 
 const PersonalInformation = () => {
   const dispatch = useAppDispatch();
@@ -19,8 +23,9 @@ const PersonalInformation = () => {
     passportNo,
     detailedAddress,
   } = useAppSelector((state) => state.apply.form);
-  const step = useAppSelector((state) => state.apply.step);
-
+  const [date, setDate] = React.useState<Date>();
+  console.log(date);  
+  const defaultClassNames = getDefaultClassNames();
   const {
     register,
     handleSubmit,
@@ -30,7 +35,7 @@ const PersonalInformation = () => {
   });
 
   const onSubmit = (data: any) => {
-    console.log({ data });
+    console.log(data);
     dispatch(updateApplyForm(data));
     dispatch(nextStep());
   };
@@ -107,6 +112,32 @@ const PersonalInformation = () => {
               {errors.dateOfBirth.message as ReactNode}
             </p>
           )}
+          {/* <label htmlFor="">Date of Birth</label>
+          <Popover placement="bottom">
+            <PopoverHandler>
+              <input
+                // onChange={() => null}
+                value={date ? format(date, "PPP") : ""}
+                defaultValue={dateOfBirth}
+                {...register("dateOfBirth")}
+                placeholder="Select a date"
+                // className="w-full p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md mt-1"
+              />
+            </PopoverHandler>
+            <PopoverContent className="border-0 bg-[#0A192F] z-10" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+              <DayPicker
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                showOutsideDays
+                captionLayout="dropdown"
+                classNames={{
+                  today: `text-amber-500`, 
+                  selected: `rounded-xl border-main text-amber-500`,
+                }}
+              />
+            </PopoverContent>
+          </Popover> */}
         </div>
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Nationality</label>
@@ -141,23 +172,15 @@ const PersonalInformation = () => {
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-between w-full">
-        <Button
-          disabled={step - 1 === 0}
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-        >
-          <icons.stepper.arrowLeft />
-        </Button>
+        <BackButton />
         <Button
           type="submit"
-          disabled={step - 1 === 2}
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
-          className="border-main"
+          className="border-main text-amber-500 "
         >
-          <icons.stepper.arrowRight />
+          <icons.stepper.arrowRight size={20} />
         </Button>
       </div>
     </form>

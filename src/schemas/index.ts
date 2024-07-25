@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const personalInfoSchema = z.object({
-    fullName: z.string().nonempty("Full Name is required"),
+    fullName: z.string().min( 1, "Full Name is required"),
     detailedAddress: z.string().nonempty("Detailed address is required"),
     passportNo: z.string().nonempty("Passport no is required"),
     dateOfBirth: z.string().nonempty("Date of Birth is required"),
@@ -21,6 +21,6 @@ export const travelPreferencesSchema = z.object({
 export const healthAndSafetySchema = z.object({
     healthDeclaration: z.boolean(),
     medicalConditions: z.string().optional(),
-    emergencyEmail: z.string().email("Invalid emergency email address"),
-    emergencyPhone: z.string().nonempty("Emergency phone number is required"),
+    emergencyEmail: z.string().email().min(1, "Emergency email is required!"),
+    emergencyPhone: z.string().min(1, "Emergency phone number is required"),
 });

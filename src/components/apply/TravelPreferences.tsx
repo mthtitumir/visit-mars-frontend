@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import {
@@ -10,6 +10,8 @@ import {
 import { Button } from "@material-tailwind/react";
 import { travelPreferencesSchema } from "@/schemas";
 import FormHeading from "./FormHeading";
+import { icons } from "@/icons";
+import BackButton from "./BackButton";
 
 const TravelPreferences = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +22,6 @@ const TravelPreferences = () => {
     spaceHotel,
     martianBase,
   } = useAppSelector((state) => state.apply.form);
-  const step = useAppSelector((state) => state.apply.step);
 
   const {
     register,
@@ -33,10 +34,6 @@ const TravelPreferences = () => {
   const onSubmit = (data: FieldValues) => {
     dispatch(updateApplyForm(data));
     dispatch(nextStep());
-  };
-
-  const handleBack = () => {
-    dispatch(prevStep());
   };
 
   return (
@@ -76,7 +73,7 @@ const TravelPreferences = () => {
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Space Hotel</label>
           <select defaultValue={spaceHotel} {...register("spaceHotel")}>
-            <option value="ABC Hotel">ABC Hotel</option>
+            <option disabled value="ABC Hotel">ABC Hotel</option>
             <option value="XYZ Hotel">XYZ Hotel</option>
             <option value="Mars Nigga">Mars Niggas</option>
             <option value="Mars Heaven">Mars Heaven</option>
@@ -120,24 +117,16 @@ const TravelPreferences = () => {
         </div>
       </div>
       <div className="flex justify-between gap-8 w-full">
+        <BackButton />
         <Button
-          onClick={handleBack}
-          disabled={step - 1 === 0}
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-        >
-          Back
-        </Button>
-        <Button
-          // onClick={handleNext}
           type="submit"
-          disabled={step - 1 === 2}
+          // onClick={() => dispatch(nextStep())}
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
+          className="border-main text-amber-500 "
         >
-          Nextt
+          <icons.stepper.arrowRight size={20} />
         </Button>
       </div>
     </form>

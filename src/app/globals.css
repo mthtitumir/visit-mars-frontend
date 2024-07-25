@@ -18,7 +18,7 @@ input,
 textarea,
 select,
 option {
-  @apply w-full p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md;
+  @apply w-full p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md mt-1;
 }
 
 .form-section-div {

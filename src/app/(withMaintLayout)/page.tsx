@@ -45,7 +45,7 @@ export default function Home() {
             </div>
             <Link href="/apply-for-mission-mars">
               <button
-                className="border border-amber-500 py-2 px-4 rounded-md hover:bg-amber-600 text-amber-500 hover:text-white font-bold text-xl transition duration-300"
+                className="border border-amber-500 py-2 px-4 rounded-md hover:bg-amber-900 text-amber-500 hover:text-white font-bold text-xl transition duration-300"
               >
                 Apply for Mission Mars
               </button>
