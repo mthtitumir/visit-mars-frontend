@@ -23,7 +23,7 @@ const RecheckApplication = () => {
       .then((payload: any) => {
         toast.success(payload.message || "Application submitted successfully!");
         dispatch(resetForm());
-        router.push(`/application-successful/${payload.data._id}`);
+        router.push(`/application-successful/${payload?.data?._id}`);
       })
       .catch((error: any) => {
         toast.error(error.message || "Failed to submit the application!");

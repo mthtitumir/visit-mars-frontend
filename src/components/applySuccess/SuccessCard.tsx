@@ -4,9 +4,11 @@ import Image from "next/image";
 import React, { useRef } from "react";
 import html2canvas from "html2canvas";
 import { Button } from "@material-tailwind/react";
+import { useRouter } from "next/navigation";
 
 const SuccessCard = ({ name }: { name: string }) => {
   const cardRef = useRef(null);
+  const router = useRouter();
   const downloadCardAsImage = async () => {
     if (cardRef.current) {
       const canvas = await html2canvas(cardRef.current);
@@ -19,6 +21,7 @@ const SuccessCard = ({ name }: { name: string }) => {
       document.body.removeChild(link);
     }
   };
+  if (!name) router.push("/");
   return (
     <>
       <div className="relative h-screen bg-inherit">
