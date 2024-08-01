@@ -95,7 +95,7 @@ const HealthAndSafety = () => {
             defaultChecked={healthDeclaration}
             className="w-4"
           />
-          <h1>Accept all <Link href="#" className="text-blue-500">terms & conditions</Link></h1>
+          <h1>Accept all <Link href="#" className="text-amber-500">terms & conditions</Link></h1>
         </div>
         {errors.medicalConditions && (
           <p className="text-red-500">

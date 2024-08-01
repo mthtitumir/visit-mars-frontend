@@ -1,15 +1,13 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { nextStep, updateApplyForm } from "@/redux/features/apply/applySlice";
-import { Button, Input, Popover, PopoverContent, PopoverHandler } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import { personalInfoSchema } from "@/schemas";
 import FormHeading from "./FormHeading";
 import { icons } from "@/icons";
 import BackButton from "./BackButton";
-import { DayPicker, getDefaultClassNames } from "react-day-picker";
-import { format } from "date-fns";
 import "react-day-picker/style.css";
 
 const PersonalInformation = () => {
@@ -23,9 +21,6 @@ const PersonalInformation = () => {
     passportNo,
     detailedAddress,
   } = useAppSelector((state) => state.apply.form);
-  const [date, setDate] = React.useState<Date>();
-  console.log(date);  
-  const defaultClassNames = getDefaultClassNames();
   const {
     register,
     handleSubmit,
@@ -112,32 +107,6 @@ const PersonalInformation = () => {
               {errors.dateOfBirth.message as ReactNode}
             </p>
           )}
-          {/* <label htmlFor="">Date of Birth</label>
-          <Popover placement="bottom">
-            <PopoverHandler>
-              <input
-                // onChange={() => null}
-                value={date ? format(date, "PPP") : ""}
-                defaultValue={dateOfBirth}
-                {...register("dateOfBirth")}
-                placeholder="Select a date"
-                // className="w-full p-2 text-amber-500 focus:outline-none border-main bg-transparent rounded-md mt-1"
-              />
-            </PopoverHandler>
-            <PopoverContent className="border-0 bg-[#0A192F] z-10" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-              <DayPicker
-                mode="single"
-                selected={date}
-                onSelect={setDate}
-                showOutsideDays
-                captionLayout="dropdown"
-                classNames={{
-                  today: `text-amber-500`, 
-                  selected: `rounded-xl border-main text-amber-500`,
-                }}
-              />
-            </PopoverContent>
-          </Popover> */}
         </div>
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Nationality</label>
