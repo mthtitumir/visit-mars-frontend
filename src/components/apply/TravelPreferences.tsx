@@ -12,6 +12,7 @@ import { travelPreferencesSchema } from "@/schemas";
 import FormHeading from "./FormHeading";
 import { icons } from "@/icons";
 import BackButton from "./BackButton";
+import { martianBases, spaceHotels } from "@/constants";
 
 const TravelPreferences = () => {
   const dispatch = useAppDispatch();
@@ -35,7 +36,6 @@ const TravelPreferences = () => {
     dispatch(updateApplyForm(data));
     dispatch(nextStep());
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className=" mx-auto">
       <FormHeading text="Travel Preferences" />
@@ -73,11 +73,11 @@ const TravelPreferences = () => {
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Space Hotel</label>
           <select defaultValue={spaceHotel} {...register("spaceHotel")}>
-            <option disabled value="ABC Hotel">ABC Hotel</option>
-            <option value="XYZ Hotel">XYZ Hotel</option>
-            <option value="Mars Nigga">Mars Niggas</option>
-            <option value="Mars Heaven">Mars Heaven</option>
-            <option value="Mars Monday">Mars Monday</option>
+            {spaceHotels?.map((sh, index) => (
+              <option key={index} value={sh}>
+                {sh}
+              </option>
+            ))}
           </select>
           {errors.spaceHotel && (
             <p className="text-red-500">
@@ -88,9 +88,11 @@ const TravelPreferences = () => {
         <div className="w-full lg:w-1/2">
           <label htmlFor="">Martian Base</label>
           <select defaultValue={martianBase} {...register("martianBase")}>
-            <option value="Base 71">Base 71</option>
-            <option value="Base Robin">Base Robin</option>
-            <option value="Base CN">Base CN</option>
+            {martianBases?.map((mb, index) => (
+              <option key={index} value={mb}>
+                {mb}
+              </option>
+            ))}
           </select>
           {errors.martianBase && (
             <p className="text-red-500">
@@ -116,7 +118,7 @@ const TravelPreferences = () => {
           )}
         </div>
       </div>
-      <div className="flex justify-between gap-8 w-full">
+      <div className="flex justify-between w-full">
         <BackButton />
         <Button
           type="submit"

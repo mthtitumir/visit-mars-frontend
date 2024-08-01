@@ -1,6 +1,6 @@
 import { FaUser } from "react-icons/fa";
 import { MdHealthAndSafety } from "react-icons/md";
-import { BsAirplane, BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { BsAirplane, BsArrowLeft, BsArrowRight, BsDownload } from "react-icons/bs";
 
 export const icons = {
     stepper: {
@@ -9,5 +9,8 @@ export const icons = {
         health: MdHealthAndSafety,
         arrowRight: BsArrowRight,
         arrowLeft: BsArrowLeft,
+    },
+    apply: {
+        download: BsDownload,
     }
 }

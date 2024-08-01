@@ -107,7 +107,6 @@ const HealthAndSafety = () => {
         <BackButton />
         <Button
           type="submit"
-          // onClick={() => dispatch(nextStep())}
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}

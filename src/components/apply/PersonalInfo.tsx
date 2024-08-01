@@ -140,7 +140,7 @@ const PersonalInformation = () => {
           )}
         </div>
       </div>
-      <div className="flex flex-col md:flex-row justify-between w-full">
+      <div className="flex justify-between w-full">
         <BackButton />
         <Button
           type="submit"

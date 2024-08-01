@@ -6,10 +6,12 @@ import { resetForm } from "@/redux/features/apply/applySlice";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { Dialogue } from "../shared/Dialogue";
+import { useRouter } from "next/navigation";
 
 const RecheckApplication = () => {
   const [open, setOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const data = useAppSelector((state) => state.apply.form);
   console.log({ data });
   const handleOpen = () => setOpen(!open);
@@ -17,7 +19,7 @@ const RecheckApplication = () => {
     handleOpen();
     try {
       const response = await fetch(
-        "http://localhost:1200/api/v1/applications",
+        `http://localhost:1200/api/v1/applications`,
         {
           method: "POST",
           headers: {
@@ -30,6 +32,7 @@ const RecheckApplication = () => {
       if (response.ok) {
         toast.success("Application submitted successfully!");
         dispatch(resetForm());
+        router.push(`/application-successful/${response.data._id}`);
       } else {
         toast.error("Failed to submit the application.");
       }
@@ -102,9 +105,9 @@ const RecheckApplication = () => {
           <h1>Emergency phone: {data.emergencyPhone}</h1>
         </div>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex flex-wrap justify-between items-center gap-3">
         <BackButton />
-        <div className="flex justify-between items-center gap-3">
+        <div className="flex flex-wrap justify-between items-center gap-3">
           <Button
             onClick={() => dispatch(resetForm())}
             placeholder={undefined}
