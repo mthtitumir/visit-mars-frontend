@@ -6,12 +6,12 @@ const ApplicationSuccessfulPage = async ({
   params: { id: string };
 }) => {
   const res = await fetch(
-    `http://localhost:1200/api/v1/applications/${params?.id}`
+    `https://visit-mars-backend-flame.vercel.app/api/v1/applications/${params?.id}`
   );
   const response = await res.json();
   return (
     <>
-      <SuccessCard name={response.data.fullName} />
+      <SuccessCard name={response?.data?.fullName} />
     </>
   );
 };
