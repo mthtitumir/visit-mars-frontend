@@ -7,39 +7,27 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { Dialogue } from "../shared/Dialogue";
 import { useRouter } from "next/navigation";
+import { useAddApplicationMutation } from "@/redux/features/apply/applyApi";
 
 const RecheckApplication = () => {
   const [open, setOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const [addApplication] = useAddApplicationMutation();
   const router = useRouter();
   const data = useAppSelector((state) => state.apply.form);
-  console.log({ data });
   const handleOpen = () => setOpen(!open);
   const handleConfirmApplication = async () => {
     handleOpen();
-    try {
-      const response = await fetch(
-        `http://localhost:1200/api/v1/applications`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      if (response.ok) {
-        toast.success("Application submitted successfully!");
+    addApplication(data)
+      .unwrap()
+      .then((payload: any) => {
+        toast.success(payload.message || "Application submitted successfully!");
         dispatch(resetForm());
-        router.push(`/application-successful/${response.data._id}`);
-      } else {
-        toast.error("Failed to submit the application.");
-      }
-    } catch (error) {
-      toast.error("An error occurred while submitting the application.");
-      console.error("Error submitting application:", error);
-    }
+        router.push(`/application-successful/${payload.data._id}`);
+      })
+      .catch((error: any) => {
+        toast.error(error.message || "Failed to submit the application!");
+      });
   };
   const texts = (
     <div className="p-4 text-white rounded-lg">

@@ -30,7 +30,6 @@ const PersonalInformation = () => {
   });
 
   const onSubmit = (data: any) => {
-    console.log(data);
     dispatch(updateApplyForm(data));
     dispatch(nextStep());
   };

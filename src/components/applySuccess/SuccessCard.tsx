@@ -55,11 +55,10 @@ const SuccessCard = ({ name }: { name: string }) => {
                   >
                     mthtitumir1@gmail.com
                   </a>
-                  .
                 </p>
               </div>
             </div>
-            <div className="flex justify-end p-3">
+            <div className="flex justify-end pb-3 pr-3">
               <Button
                 className="border-main text-amber-500 bg-transparent rounded mt-3 text-right"
                 onClick={downloadCardAsImage}
